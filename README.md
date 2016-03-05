@@ -1,6 +1,8 @@
 #uno-reader#
 
-Arduino based fencing scoring machine
+Arduino based RFID reader.
+
+Starting point came from [this blog](http://devsketches.blogspot.com/2014/05/rfid-sensor-funduino-rfid-rc522.html).
 
 ###Prerequisites###
 
