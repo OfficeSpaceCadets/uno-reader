@@ -10,7 +10,7 @@
 #include <SPI.h>  
 #include <RFID.h>  
 #define SS_PIN 10  
-#define RST_PIN 5  
+#define RST_PIN 9  
 
 RFID rfid(SS_PIN,RST_PIN);  
 int serNum[5];  
@@ -22,19 +22,17 @@ void setup(){
 }  
 
 void loop(){  
-  if(rfid.isCard()){  
-    if(rfid.readCardSerial()) {  
-      Serial.print(rfid.serNum[0],DEC);  
-      Serial.print(" ");  
-      Serial.print(rfid.serNum[1],DEC);  
-      Serial.print(" ");  
-      Serial.print(rfid.serNum[2],DEC);  
-      Serial.print(" ");  
-      Serial.print(rfid.serNum[3],DEC);  
-      Serial.print(" ");  
-      Serial.print(rfid.serNum[4],DEC);  
-      Serial.println("");  
-    }  
+  if(rfid.isCard() && rfid.readCardSerial()) {  
+    Serial.print(rfid.serNum[0],DEC);  
+    Serial.print(" ");  
+    Serial.print(rfid.serNum[1],DEC);  
+    Serial.print(" ");  
+    Serial.print(rfid.serNum[2],DEC);  
+    Serial.print(" ");  
+    Serial.print(rfid.serNum[3],DEC);  
+    Serial.print(" ");  
+    Serial.print(rfid.serNum[4],DEC);  
+    Serial.println("");  
   }  
   rfid.halt();  
 }  
