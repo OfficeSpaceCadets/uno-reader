@@ -24,7 +24,8 @@ RFID::RFID(int chipSelectPin, int NRSTPD)
   _chipSelectPin = chipSelectPin;
 
   pinMode(_chipSelectPin,OUTPUT);			// Set digital as OUTPUT to connect it to the RFID /ENABLE pin 
-  digitalWrite(_chipSelectPin, LOW); 
+  //digitalWrite(_chipSelectPin, LOW); 
+  digitalWrite(_chipSelectPin, HIGH); 
 
 
   pinMode(NRSTPD,OUTPUT);					// Set digital pin, Not Reset and Power-down
