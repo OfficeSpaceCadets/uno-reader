@@ -28,22 +28,24 @@ void loop(){
   //int ss = flip ? SS_PIN : OTHER_SS_PIN;
   //flip = ! flip;
   int ss = SS_PIN;
+  bool rfid1_is_present = false;
+  bool rfid2_is_present = false;
 
   RFID rfid1(ss, RST_PIN);
   SPI.begin(ss, 13, 11);
   rfid1.init();
 
   if(rfid1.isCard() && rfid1.readCardSerial()) {
+    rfid1_is_present = true;
     Serial.print(rfid1.serNum[0],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid1.serNum[1],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid1.serNum[2],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid1.serNum[3],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid1.serNum[4],DEC);
-    Serial.println("");
     digitalWrite(LED1, HIGH);
   }
   else {
@@ -57,20 +59,28 @@ void loop(){
   rfid2.init();
 
   if(rfid2.isCard() && rfid2.readCardSerial()) {
+    rfid2_is_present = true;
+    if (rfid1_is_present) {
+      Serial.print(":");
+    }
     Serial.print(rfid2.serNum[0],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid2.serNum[1],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid2.serNum[2],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid2.serNum[3],DEC);
-    Serial.print(" ");
+    Serial.print("_");
     Serial.print(rfid2.serNum[4],DEC);
-    Serial.println("");
+
     digitalWrite(LED2, HIGH);
   }
   else {
     digitalWrite(LED2, LOW);
   }
   rfid2.halt();
+
+  if (rfid1_is_present || rfid2_is_present) {
+    Serial.println("");
+  }
 }
