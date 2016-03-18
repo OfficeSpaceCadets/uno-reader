@@ -9,6 +9,8 @@
  */
 #include <SPI.h>
 #include <RFID.h>
+#include <Arduino.h>
+
 #define SS_PIN 10
 #define OTHER_SS_PIN 8
 #define RST_PIN 9  //-- yellow
@@ -35,17 +37,19 @@ void loop(){
   SPI.begin(ss, 13, 11);
   rfid1.init();
 
+  String output = "";
+
   if(rfid1.isCard() && rfid1.readCardSerial()) {
     rfid1_is_present = true;
-    Serial.print(rfid1.serNum[0],DEC);
-    Serial.print("_");
-    Serial.print(rfid1.serNum[1],DEC);
-    Serial.print("_");
-    Serial.print(rfid1.serNum[2],DEC);
-    Serial.print("_");
-    Serial.print(rfid1.serNum[3],DEC);
-    Serial.print("_");
-    Serial.print(rfid1.serNum[4],DEC);
+    output += rfid1.serNum[0];
+    output += "_";
+    output += rfid1.serNum[1];
+    output += "_";
+    output += rfid1.serNum[2];
+    output += "_";
+    output += rfid1.serNum[3];
+    output += "_";
+    output += rfid1.serNum[4];
     digitalWrite(LED1, HIGH);
   }
   else {
@@ -62,16 +66,17 @@ void loop(){
     rfid2_is_present = true;
     if (rfid1_is_present) {
       Serial.print(":");
+      output += ":";
     }
-    Serial.print(rfid2.serNum[0],DEC);
-    Serial.print("_");
-    Serial.print(rfid2.serNum[1],DEC);
-    Serial.print("_");
-    Serial.print(rfid2.serNum[2],DEC);
-    Serial.print("_");
-    Serial.print(rfid2.serNum[3],DEC);
-    Serial.print("_");
-    Serial.print(rfid2.serNum[4],DEC);
+    output += rfid2.serNum[0];
+    output += "_";
+    output += rfid2.serNum[1];
+    output += "_";
+    output += rfid2.serNum[2];
+    output += "_";
+    output += rfid2.serNum[3];
+    output += "_";
+    output += rfid2.serNum[4];
 
     digitalWrite(LED2, HIGH);
   }
@@ -81,6 +86,6 @@ void loop(){
   rfid2.halt();
 
   if (rfid1_is_present || rfid2_is_present) {
-    Serial.println("");
+    Serial.println(output);
   }
 }
