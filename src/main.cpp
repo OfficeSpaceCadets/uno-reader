@@ -41,15 +41,15 @@ void loop(){
 
   if(rfid1.isCard() && rfid1.readCardSerial()) {
     rfid1_is_present = true;
-    output += rfid1.serNum[0];
+    output += String(rfid1.serNum[0], DEC);
     output += "_";
-    output += rfid1.serNum[1];
+    output += String(rfid1.serNum[1], DEC);
     output += "_";
-    output += rfid1.serNum[2];
+    output += String(rfid1.serNum[2], DEC);
     output += "_";
-    output += rfid1.serNum[3];
+    output += String(rfid1.serNum[3], DEC);
     output += "_";
-    output += rfid1.serNum[4];
+    output += String(rfid1.serNum[4], DEC);
     digitalWrite(LED1, HIGH);
   }
   else {
@@ -68,15 +68,15 @@ void loop(){
       Serial.print(":");
       output += ":";
     }
-    output += rfid2.serNum[0];
+    output += String(rfid2.serNum[0], DEC);
     output += "_";
-    output += rfid2.serNum[1];
+    output += String(rfid2.serNum[1], DEC);
     output += "_";
-    output += rfid2.serNum[2];
+    output += String(rfid2.serNum[2], DEC);
     output += "_";
-    output += rfid2.serNum[3];
+    output += String(rfid2.serNum[3], DEC);
     output += "_";
-    output += rfid2.serNum[4];
+    output += String(rfid2.serNum[4], DEC);
 
     digitalWrite(LED2, HIGH);
   }
