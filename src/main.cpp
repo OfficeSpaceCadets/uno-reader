@@ -10,6 +10,7 @@
 #include <SPI.h>
 #include <RFID.h>
 #include <Arduino.h>
+#include <TimedAction.h>
 
 #define SS_PIN 10
 #define OTHER_SS_PIN 8
@@ -19,7 +20,9 @@
 #define LED2 6
 
 
+
 bool flip;
+String output = "";
 
 void setup(){
   Serial.begin(9600);
@@ -31,13 +34,10 @@ void loop(){
   //flip = ! flip;
   int ss = SS_PIN;
   bool rfid1_is_present = false;
-  bool rfid2_is_present = false;
 
   RFID rfid1(ss, RST_PIN);
   SPI.begin(ss, 13, 11);
   rfid1.init();
-
-  String output = "";
 
   if(rfid1.isCard() && rfid1.readCardSerial()) {
     rfid1_is_present = true;
@@ -53,6 +53,7 @@ void loop(){
     digitalWrite(LED1, HIGH);
   }
   else {
+    output = "";
     digitalWrite(LED1, LOW);
   }
   rfid1.halt();
@@ -63,7 +64,6 @@ void loop(){
   rfid2.init();
 
   if(rfid2.isCard() && rfid2.readCardSerial()) {
-    rfid2_is_present = true;
     if (rfid1_is_present) {
       output += ":";
     }
@@ -81,11 +81,16 @@ void loop(){
   }
   else {
     digitalWrite(LED2, LOW);
+    output = "";
   }
   rfid2.halt();
 
-  if (rfid1_is_present || rfid2_is_present) {
+}
+
+void send() {
+  if (output.length() > 0) {
     Serial.println(output);
   }
-  delay(2000);
 }
+
+TimedAction timedAction = TimedAction(2000, send);
