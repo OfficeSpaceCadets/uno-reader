@@ -65,7 +65,6 @@ void loop(){
   if(rfid2.isCard() && rfid2.readCardSerial()) {
     rfid2_is_present = true;
     if (rfid1_is_present) {
-      Serial.print(":");
       output += ":";
     }
     output += String(rfid2.serNum[0], DEC);
@@ -88,4 +87,5 @@ void loop(){
   if (rfid1_is_present || rfid2_is_present) {
     Serial.println(output);
   }
+  delay(2000);
 }
